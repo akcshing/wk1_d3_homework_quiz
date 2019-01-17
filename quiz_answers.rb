@@ -112,6 +112,8 @@ users = {
 1. Get Jonathan's Twitter handle (i.e. the string `"jonnyt"`)
   users["Jonathan"][:twitter]
 
+  # a hash must be followed by [] to access data within
+
 2. Get Erik's hometown
   users["Erik"][:home_town]
 
@@ -121,11 +123,36 @@ users = {
 4. Get the type of Avril's pet Monty
   p users["Avril"][:pets][0][:species]
 
+  # watch out for bracket types / types of datastructures
+  # pets is an array so that it allows us to add more pets (a data group)
+
 5. Get the smallest of Erik's lottery numbers
   users ["Erik"][:lottery_numbers].min()
 
 6. Return an array of Avril's lottery numbers that are even
   users["Avril"][:lottery_numbers].select {|num| num.even?}
+
+    result = []
+  for number in users["Avril"][:lottery_numbers]
+  	result << number if number.even?
+  end
+  p result
+
+    Or
+
+  def evil_even_numbers(array_of_numbers)
+    result = []
+    for number in array_of_numbers
+      result.push(number) if(number.even?)
+    end
+
+    return result
+  end
+
+  array = users["Avril"][:lottery_numbers]
+  evens = evil_even_numbers(array)
+
+  p evens
 
 7. Erik is one lottery number short! Add the number `7` to be included in his lottery numbers
   p users["Erik"][:lottery_numbers].push(7)
@@ -135,6 +162,13 @@ users = {
 
 9. Add a pet dog to Erik called "Fluffy"
   users["Erik"][:pets].push({name: "Fluffy", species: "dog"})
+
+  dog = {                     # alternate method, more readable
+  :name => "fluffy",
+  :species => "dog"
+}
+
+users["Erik"][:pets] << dog
 
 10. Add another person to the users hash
 users["Alex"] = {
@@ -148,6 +182,20 @@ users["Alex"] = {
       }
     ]
 }
+
+me =  {                       # alternate method, more readable. better for functions?
+  :twitter => "tgoncalves",
+  :lottery_numbers => [1, 2, 9, 10, 14, 28],
+  :home_town => "Morningside",
+  :pets => [
+      {
+        :name => "tommy",
+        :species => "cat"
+      }
+    ]
+  }
+
+users["Tony"] = me  # users["Tony"] accesses the user hash and checks if there is a key "Tony", if not, creates new key "Tony"
 
 
 ## Exercise C
